@@ -106,11 +106,11 @@ submitBtn.addEventListener('click', () => {
   });
   newPackage.id = viewData.length;
   viewData.push({ ...newPackage });
-  render();
+  render(areaFilter.value); // 新增後保留下拉選單篩選
+  form.reset(); // 清空表單
 });
 // 監聽下拉選單
 areaFilter.addEventListener('change', (e) => {
   render(e.target.value);
 });
-
 getData();
