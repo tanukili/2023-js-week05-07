@@ -1,3 +1,55 @@
-.index-title {
-  font-size: 100px;
+.btn-primary {
+  --bs-btn-hover-bg: #004e4d;
+}
+
+.logo {
+  background: url(/assets/images/logo.png);
+  width: 350px;
+  height: 235px;
+  display: block;
+  text-indent: 101%;
+  white-space: nowrap;
+  overflow: hidden;
+  background-size: cover;
+  background-position: center;
+}
+
+.w-md-40 {
+  @media (min-width: 992px) {
+    width: 40% !important;
+  }
+}
+
+.select-icon::before,
+.select-icon::after {
+  content: '';
+  position: absolute;
+  border: 4px solid;
+  right: 26px;
+}
+
+.select-icon::before {
+  border-color: transparent transparent var(--bs-primary) transparent;
+  top: 11px;
+}
+
+.select-icon::after {
+  border-color: var(--bs-primary) transparent transparent transparent;
+  bottom: 11px;
+}
+
+.gy-5 {
+  --bs-gutter-y: 38px;
+}
+
+.badge {
+  line-height: 1.2;
+  border-radius: 0 4px 4px 0;
+}
+
+option {
+  appearance: none;
+  -moz-appearance: none;
+  -webkit-appearance: none;
+  color: #212529;
 }
