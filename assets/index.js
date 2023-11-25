@@ -83,6 +83,50 @@ function render(nowArea = '全部地區') {
   const filterNum = document.querySelector('#filterNum');
   filterNum.textContent = `本次搜尋共 ${renderData.length} 筆資料`;
 }
+
+// 圖表渲染
+function renderChart(chartData) {
+  const chart = c3.generate({
+    bindto: '#chart',
+    data: {
+      columns: chartData,
+      type: 'donut',
+      colors: {
+        台北: '#26BFC7',
+        台中: '#5151D3',
+        高雄: '#E68619',
+      },
+    },
+    donut: {
+      title: '套票地區比重',
+      width: 12,
+      label: {
+        show: false,
+      },
+    },
+    size: {
+      width: 172,
+      height: 204,
+    },
+    padding: {
+      bottom: 4,
+    },
+  });
+}
+
+// 整理成 C3 data 要求格式
+function sortDataForChart() {
+  const countArea = [];
+  viewData.forEach((e) => {
+    if (countArea[e.area]) {
+      countArea[e.area] += 1;
+    } else {
+      countArea[e.area] = 1;
+    }
+  });
+  return Object.keys(countArea).map((e, i) => [e, Object.values(countArea)[i]]);
+}
+
 // 取得 API 資料
 function getData() {
   axios
@@ -93,11 +137,13 @@ function getData() {
       viewData.push(...res.data.data);
       // 渲染畫面
       render();
+      renderChart(sortDataForChart());
     })
     .catch((err) => {
       console.log(err.response);
     });
 }
+
 // 監聽按鈕
 submitBtn.addEventListener('click', () => {
   window.event.preventDefault();
@@ -107,10 +153,12 @@ submitBtn.addEventListener('click', () => {
   newPackage.id = viewData.length;
   viewData.push({ ...newPackage });
   render(areaFilter.value); // 新增後保留下拉選單篩選
+  renderChart(sortDataForChart());
   form.reset(); // 清空表單
 });
 // 監聽下拉選單
 areaFilter.addEventListener('change', (e) => {
   render(e.target.value);
 });
+
 getData();
